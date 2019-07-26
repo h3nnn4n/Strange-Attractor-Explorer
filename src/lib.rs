@@ -4,6 +4,7 @@ extern crate wasm_bindgen;
 extern crate web_sys;
 
 mod clifford;
+mod image_data;
 mod utils;
 
 use cfg_if::cfg_if;

@@ -1,5 +1,5 @@
 [package]
-name = "ilovewasm"
+name = "clifford-attractor"
 version = "0.1.0"
 authors = ["h3nnn4n <uber.renan@gmail.com>"]
 
@@ -21,9 +21,18 @@ opt-level = "s"
 lto = true
 
 [dependencies.web-sys]
-version = "0.3.14"
+version = "0.3.14" # pi version
 features = [
-  "console",
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window',
+  'CanvasRenderingContext2d',
+  'HtmlCanvasElement',
+  'HtmlInputElement',
+  'ImageData',
+  'console',
 ]
 
 [dependencies.rand]

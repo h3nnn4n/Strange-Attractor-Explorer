@@ -2,8 +2,10 @@
 
 extern crate web_sys;
 
-use self::web_sys::console;
+// use self::web_sys::console;
 use cfg_if::cfg_if;
+use wasm_bindgen::JsCast;
+use web_sys::console;
 
 cfg_if! {
     if #[cfg(feature = "console_error_panic_hook")] {
@@ -25,4 +27,39 @@ macro_rules! log {
 
 pub fn console_log(text: &str) {
     console::log_1(&text.into());
+}
+
+pub fn get_document() -> web_sys::Document {
+    let window = web_sys::window().expect("no global `window` exists");
+    window.document().expect("should have a document on window")
+}
+
+pub fn get_canvas() -> web_sys::HtmlCanvasElement {
+    let canvas: web_sys::HtmlCanvasElement = get_document()
+        .get_element_by_id("canvas")
+        .expect("canvas with id #canvas was not found")
+        .dyn_into::<web_sys::HtmlCanvasElement>()
+        .map_err(|_| ())
+        .unwrap();
+
+    canvas
+}
+
+pub fn get_canvas_context() -> web_sys::CanvasRenderingContext2d {
+    get_canvas()
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::<web_sys::CanvasRenderingContext2d>()
+        .unwrap()
+}
+
+pub fn get_input_value_by_id(element_id: &str) -> f64 {
+    get_document()
+        .get_element_by_id(element_id)
+        .expect("input field with the given id was not found")
+        .dyn_into::<web_sys::HtmlInputElement>()
+        .map_err(|_| ())
+        .unwrap()
+        .value_as_number()
 }

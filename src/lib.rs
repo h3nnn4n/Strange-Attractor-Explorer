@@ -1,11 +1,14 @@
 extern crate cfg_if;
 extern crate rand;
 extern crate wasm_bindgen;
+extern crate web_sys;
 
+mod clifford;
 mod utils;
 
 use cfg_if::cfg_if;
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::Clamped;
 
 cfg_if! {
     if #[cfg(feature = "wee_alloc")] {
@@ -16,17 +19,34 @@ cfg_if! {
 }
 
 #[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
+pub fn init() {
+    utils::console_log("init");
+    let canvas = utils::get_canvas();
+
+    canvas.set_width(600);
+    canvas.set_height(600);
+
+    render_attractor();
+    utils::console_log("finished rendering");
 }
 
 #[wasm_bindgen]
-pub fn js_alert(name: &str) {
-    alert(&format!("{}", name));
-}
+pub fn render_attractor() {
+    let canvas = utils::get_canvas();
+    let context = utils::get_canvas_context();
 
-#[wasm_bindgen]
-pub fn a_plus_b(a: i32, b: i32) -> i32 {
-    a + b
-}
+    // let real = utils::get_input_value_by_id("real");
+    // let imaginary = utils::get_input_value_by_id("imaginary");
 
+    let width = canvas.width();
+    let height = canvas.height();
+
+    let attractor = clifford::Clifford::new();
+    let mut data = attractor.iterate();
+
+    let data =
+        web_sys::ImageData::new_with_u8_clamped_array_and_sh(Clamped(&mut data), width, height)
+            .unwrap();
+
+    context.put_image_data(&data, 0.0, 0.0).unwrap();
+}

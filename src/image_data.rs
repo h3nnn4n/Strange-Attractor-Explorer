@@ -75,6 +75,19 @@ impl ImageData {
         self.data[index + 2] += 1;
     }
 
+    pub fn gamma_correction(&mut self, gamma: f64) {
+        for x in 0..self.width {
+            for y in 0..self.height {
+                let index = ((y * self.width + x) * 4) as usize;
+
+                for i in 0..3 {
+                    self.data[index + i] =
+                        ((self.data[index + i] as f64 / 255.0).powf(1.0 / gamma) * 255.0) as u64;
+                }
+            }
+        }
+    }
+
     pub fn invert_colors(&mut self) {
         for x in 0..self.width {
             for y in 0..self.height {

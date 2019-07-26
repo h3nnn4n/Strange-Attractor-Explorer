@@ -9,8 +9,55 @@
 
 <body>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-
   <script src="./bootstrap.js"></script>
+
+  <div class="container">
+    <div class="">
+      <div class=" input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">a = </span>
+        </div>
+
+        <input class="form-control" type="number" name="a_value" id="a_value" value="-1.4" step="0.01">
+
+        <div class="input-group-prepend">
+          <span class="input-group-text">b = </span>
+        </div>
+
+        <input class="form-control" type="number" name="b_value" id="b_value" value="1.6" step="0.01">
+
+        <div class="input-group-prepend">
+          <span class="input-group-text">c = </span>
+        </div>
+
+        <input class="form-control" type="number" name="c_value" id="c_value" value="1.0" step="0.01">
+
+        <div class="input-group-prepend">
+          <span class="input-group-text">d = </span>
+        </div>
+
+        <input class="form-control" type="number" name="d_value" id="d_value" value="0.7" step="0.01">
+
+        <div class="input-group-append">
+          <button class="btn btn-primary input-group-text" type="button" id="render">render</button>
+        </div>
+      </div>
+
+      <div class=" input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">gamma = </span>
+        </div>
+
+        <input class="form-control" type="number" name="gamma_value" id="gamma_value" value="1.0" step="0.01">
+
+        <div class="input-group-prepend">
+          <span class="input-group-text">iters = </span>
+        </div>
+
+        <input class="form-control" type="number" name="iters_value" id="iters_value" value="1000000" step="50000">
+      </div>
+    </div>
+  </div>
 
   <div class="container">
     <div class="row text-center">

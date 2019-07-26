@@ -1,4 +1,4 @@
-use image_data;
+use image_data::ImageData;
 
 pub struct Clifford {
     a: f64,
@@ -25,7 +25,7 @@ impl Clifford {
             c: 1.0,
             d: 0.7,
 
-            iters: 10_000_000,
+            iters: 1_000_000,
 
             width: 600,
             height: 600,
@@ -37,13 +37,24 @@ impl Clifford {
         }
     }
 
-    pub fn iterate(&self) -> Vec<u8> {
+    pub fn set_parameters(&mut self, a: f64, b: f64, c: f64, d: f64) {
+        self.a = a;
+        self.b = b;
+        self.c = c;
+        self.d = d;
+    }
+
+    pub fn set_iters(&mut self, iters: u64) {
+        self.iters = iters;
+    }
+
+    pub fn iterate(&self) -> ImageData {
         let mut x;
         let mut y;
         let mut xn = 0.5;
         let mut yn = 0.5;
 
-        let mut data = image_data::ImageData::init(self.width, self.height);
+        let mut data = ImageData::init(self.width, self.height);
 
         for _ in 0..self.iters {
             x = (self.a * yn).sin() + self.c * (self.a * xn).cos();
@@ -55,9 +66,7 @@ impl Clifford {
             data.put_pixel(self.get_pixel_position(x, y));
         }
 
-        data.normalize_image();
-        data.invert_colors();
-        data.as_u8()
+        data
     }
 
     fn get_pixel_position(&self, x: f64, y: f64) -> (u64, u64) {

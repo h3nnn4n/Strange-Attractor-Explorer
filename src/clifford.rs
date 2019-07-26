@@ -55,7 +55,9 @@ impl Clifford {
             data.put_pixel(self.get_pixel_position(x, y));
         }
 
-        data.normalize_image()
+        data.normalize_image();
+        data.invert_colors();
+        data.as_u8()
     }
 
     fn get_pixel_position(&self, x: f64, y: f64) -> (u64, u64) {

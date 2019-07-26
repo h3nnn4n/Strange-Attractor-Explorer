@@ -1,5 +1,6 @@
 {
     "eslint.packageManager": "yarn",
     "eslint.enable": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.enabled": false
 }

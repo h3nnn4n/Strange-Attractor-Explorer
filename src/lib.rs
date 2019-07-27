@@ -78,8 +78,8 @@ pub fn render_attractor() {
                 attractor.iterate(&mut img_data);
             }
 
-            let progress = ((p * 0.5) + (mode as f64) * 0.5) * 100.0;
-            utils::set_progress_bar(progress);
+            // let progress = ((p * 0.5) + (mode as f64) * 0.5) * 100.0;
+            // utils::set_progress_bar(progress);
         }
 
         if mode == 0 {

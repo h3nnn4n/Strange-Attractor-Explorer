@@ -4,6 +4,12 @@ A simple strange attractor explorer written in Rust and Typescript. For now
 only the Clifford Attractor is available. I plan to support entering custom
 equations in the future.
 
+<p float="left">
+  <img src="/examples/example1.png" width="100" />
+  <img src="/examples/example2.png" width="100" />
+  <img src="/examples/example3.png" width="100" />
+</p>
+
 ## How to use
 
 The `a`, `b`, `c` and `d` parameters

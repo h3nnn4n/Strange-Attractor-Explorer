@@ -23,15 +23,19 @@ lto = true
 [dependencies.web-sys]
 version = "0.3.14" # pi version
 features = [
+  'CanvasRenderingContext2d',
+  'CssStyleDeclaration',
   'Document',
   'Element',
-  'HtmlElement',
-  'Node',
-  'Window',
-  'CanvasRenderingContext2d',
+  'EventTarget',
   'HtmlCanvasElement',
+  'HtmlElement',
+  'HtmlDivElement',
   'HtmlInputElement',
   'ImageData',
+  'MouseEvent',
+  'Node',
+  'Window',
   'console',
 ]
 

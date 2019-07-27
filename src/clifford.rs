@@ -8,6 +8,10 @@ pub struct Clifford {
 
     iters: u64,
 
+    config: Config,
+}
+
+pub struct Config {
     width: u64,
     height: u64,
 
@@ -15,6 +19,20 @@ pub struct Clifford {
     miny: f64,
     maxx: f64,
     maxy: f64,
+}
+
+impl Config {
+    pub fn new() -> Config {
+        Config {
+            width: 600,
+            height: 600,
+
+            minx: -2.0,
+            miny: -2.0,
+            maxx: 2.0,
+            maxy: 2.0,
+        }
+    }
 }
 
 impl Clifford {
@@ -27,13 +45,7 @@ impl Clifford {
 
             iters: 1_000_000,
 
-            width: 600,
-            height: 600,
-
-            minx: -2.0,
-            miny: -2.0,
-            maxx: 2.0,
-            maxy: 2.0,
+            config: Config::new(),
         }
     }
 
@@ -54,7 +66,7 @@ impl Clifford {
         let mut xn = 0.5;
         let mut yn = 0.5;
 
-        let mut data = ImageData::init(self.width, self.height);
+        let mut data = ImageData::init(self.config.width, self.config.height);
 
         for _ in 0..self.iters {
             x = (self.a * yn).sin() + self.c * (self.a * xn).cos();
@@ -69,9 +81,52 @@ impl Clifford {
         data
     }
 
+    pub fn find_bounding_box(&mut self) {
+        let mut x;
+        let mut y;
+        let mut xn = 0.5;
+        let mut yn = 0.5;
+
+        self.config.minx = 10.0;
+        self.config.miny = 10.0;
+        self.config.maxx = -10.0;
+        self.config.maxy = -10.0;
+
+        for _ in 0..10_000 {
+            x = (self.a * yn).sin() + self.c * (self.a * xn).cos();
+            y = (self.b * xn).sin() + self.d * (self.b * yn).cos();
+
+            xn = x;
+            yn = y;
+
+            if x < self.config.minx {
+                self.config.minx = x
+            }
+
+            if y < self.config.miny {
+                self.config.miny = y
+            }
+
+            if x > self.config.maxx {
+                self.config.maxx = x
+            }
+
+            if y > self.config.maxy {
+                self.config.maxy = y
+            }
+        }
+
+        self.config.minx *= 1.10;
+        self.config.miny *= 1.10;
+        self.config.maxx *= 1.10;
+        self.config.maxy *= 1.10;
+    }
+
     fn get_pixel_position(&self, x: f64, y: f64) -> (u64, u64) {
-        let xi = (((x - self.minx) * self.width as f64) / (self.maxx - self.minx)) as u64;
-        let yi = (((y - self.miny) * self.height as f64) / (self.maxy - self.miny)) as u64;
+        let xi = (((x - self.config.minx) * self.config.width as f64)
+            / (self.config.maxx - self.config.minx)) as u64;
+        let yi = (((y - self.config.miny) * self.config.height as f64)
+            / (self.config.maxy - self.config.miny)) as u64;
 
         (xi, yi)
     }

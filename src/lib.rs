@@ -49,6 +49,9 @@ pub fn render_attractor() {
 
     attractor.set_parameters(a_parameter, b_parameter, c_parameter, d_parameter);
     attractor.set_iters(iters_parameter as u64);
+    attractor.find_bounding_box();
+
+    utils::console_log("found bounding box");
 
     let mut raw_data = attractor.iterate();
 

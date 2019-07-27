@@ -33,7 +33,9 @@ pub fn init() {
 
 #[wasm_bindgen]
 pub fn render_attractor() {
+    utils::console_log("\n\n");
     utils::console_log("started rendering");
+
     let canvas = utils::get_canvas();
     let context = utils::get_canvas_context();
 
@@ -79,10 +81,11 @@ pub fn render_attractor() {
 
         if mode == 0 {
             attractor.bump_bounding_box();
+            utils::console_log("found bounding box");
+        } else if mode == 1 {
+            utils::console_log("finished iterating");
         }
     }
-
-    utils::console_log("found bounding box");
 
     img_data.normalize_image();
     img_data.invert_colors();

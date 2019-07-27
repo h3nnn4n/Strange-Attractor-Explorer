@@ -1,10 +1,6 @@
 import * as $ from 'jquery';
 
 var Rust: any;
-var clifford_config = {
-  'start_point': [0, 0, 0, 0],
-  'end_point': [0, 0, 0, 0]
-}
 
 const init = () => {
   Rust.init();

@@ -1,32 +1,25 @@
-# Rust Wasm Template
+# Strange Attractor Explore
 
-When I started messing arround with Rust and webassembly I found the good Rust documentation, however it did not cover
-everything that I needed. In particular I had a really bad time getting wasm to run inside a test environment.
-After many hours of relentless and merciless battle I managed to get it to work. This is a template
-repository with the basic boiler-plate.
+A simple strange attractor explorer written in Rust and Typescript. For now
+only the Clifford Attractor is available. The `a`, `b`, `c` and `d` parameters
+defines the attractor. There are two sets of such parameters because the explorer
+draws several strange attractors on top of each other. It starts with the values
+from the first line, and interpolates it until it reaches the second set of
+parameters. The number of points in the interpolation is set by `frames`. The
+number of iterations that each attractors is iterated for a given set of
+parameters is set by `iters`. Note that the total number of function evaluations
+is `frames` times `iters`. Watch out for big numbers. It is possible to control
+the image brightness by setting `gamma`. If you only want one image to be drawn,
+that is, dont interpolate parameters, just set `frames` to 1.
 
-There is pretty much nothing about unit testing hybrid js/wasm code in the internet (at least that I could find).
-So I hope this can be helpful to somebody ;)
+# TODO
 
-Any questions/suggestions feel free to open an issue/pull request.
+Some features that I want to implement in the nearby future:
 
-## How to use
-
-1. Clone this repo
-2. Have the [rust toolchain](https://www.rust-lang.org/tools/install) installed
-3. Have [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) installed
-4. Run `yarn install`. If you dont have it, you can get it [here](https://yarnpkg.com/lang/en/docs/install/)
-5. Run `wasm-pack build`
-6. Run `yarn link` inside the `pkg` folder
-7. Run `yarn link ilovewasm` on the project root (this is the project name on the _config.toml_ file)
-8. Run `yarn run start`
-9. Go to `http://localhost:8080/`
-
-## About Rust -> Wasm
-
-Checkout [this](https://rustwasm.github.io/book/introduction.html) for a simple (yet complete) tutorial of how to make
-a [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) using rust/wasm and some
-javascript. A more indepth and broad tutorial is available [here](https://rustwasm.github.io/wasm-pack/book/).
+- A progress bar
+- Saving/downloading the results
+- Colors
+- A simple parser using reverse polish notation for custom attractors
 
 ## License
 

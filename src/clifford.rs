@@ -1,4 +1,5 @@
 use image_data::ImageData;
+use rand::Rng;
 
 pub struct Clifford {
     a: f64,
@@ -9,9 +10,11 @@ pub struct Clifford {
     iters: u64,
 
     config: Config,
+
+    rng: rand::prelude::ThreadRng,
 }
 
-pub struct Config {
+struct Config {
     width: u64,
     height: u64,
 
@@ -27,10 +30,10 @@ impl Config {
             width: 600,
             height: 600,
 
-            minx: -2.0,
-            miny: -2.0,
-            maxx: 2.0,
-            maxy: 2.0,
+            minx: 10.0,
+            miny: 10.0,
+            maxx: -10.0,
+            maxy: -10.0,
         }
     }
 }
@@ -46,6 +49,8 @@ impl Clifford {
             iters: 1_000_000,
 
             config: Config::new(),
+
+            rng: rand::thread_rng(),
         }
     }
 
@@ -60,13 +65,11 @@ impl Clifford {
         self.iters = iters;
     }
 
-    pub fn iterate(&self) -> ImageData {
+    pub fn iterate(&mut self, data: &mut ImageData) {
         let mut x;
         let mut y;
-        let mut xn = 0.5;
-        let mut yn = 0.5;
-
-        let mut data = ImageData::init(self.config.width, self.config.height);
+        let mut xn: f64 = self.rng.gen_range(-1.0, 1.0);
+        let mut yn: f64 = self.rng.gen_range(-1.0, 1.0);
 
         for _ in 0..self.iters {
             x = (self.a * yn).sin() + self.c * (self.a * xn).cos();
@@ -77,20 +80,20 @@ impl Clifford {
 
             data.put_pixel(self.get_pixel_position(x, y));
         }
-
-        data
     }
 
-    pub fn find_bounding_box(&mut self) {
+    pub fn find_bounding_box(&mut self, reset: bool) {
         let mut x;
         let mut y;
-        let mut xn = 0.5;
-        let mut yn = 0.5;
+        let mut xn: f64 = self.rng.gen_range(-1.0, 1.0);
+        let mut yn: f64 = self.rng.gen_range(-1.0, 1.0);
 
-        self.config.minx = 10.0;
-        self.config.miny = 10.0;
-        self.config.maxx = -10.0;
-        self.config.maxy = -10.0;
+        if reset {
+            self.config.minx = 10.0;
+            self.config.miny = 10.0;
+            self.config.maxx = -10.0;
+            self.config.maxy = -10.0;
+        }
 
         for _ in 0..10_000 {
             x = (self.a * yn).sin() + self.c * (self.a * xn).cos();
@@ -115,7 +118,9 @@ impl Clifford {
                 self.config.maxy = y
             }
         }
+    }
 
+    pub fn bump_bounding_box(&mut self) {
         self.config.minx *= 1.10;
         self.config.miny *= 1.10;
         self.config.maxx *= 1.10;

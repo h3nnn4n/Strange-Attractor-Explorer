@@ -8,6 +8,8 @@ equations in the future.
   <img src="/examples/example1.jpg" width="100" />
   <img src="/examples/example2.jpg" width="100" />
   <img src="/examples/example3.jpg" width="100" />
+  <img src="/examples/example4.jpg" width="100" />
+  <img src="/examples/example5.jpg" width="100" />
 </p>
 
 ## How to use

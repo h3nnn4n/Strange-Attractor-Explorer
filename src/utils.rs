@@ -53,31 +53,3 @@ pub fn get_canvas_context() -> web_sys::CanvasRenderingContext2d {
         .dyn_into::<web_sys::CanvasRenderingContext2d>()
         .unwrap()
 }
-
-pub fn get_input_value_by_id(element_id: &str) -> f64 {
-    get_document()
-        .get_element_by_id(element_id)
-        .expect("input field with the given id was not found")
-        .dyn_into::<web_sys::HtmlInputElement>()
-        .map_err(|_| ())
-        .unwrap()
-        .value_as_number()
-}
-
-pub fn get_div_by_id(element_id: &str) -> web_sys::HtmlDivElement {
-    get_document()
-        .get_element_by_id(element_id)
-        .expect("input field with the given id was not found")
-        .dyn_into::<web_sys::HtmlDivElement>()
-        .map_err(|_| ())
-        .unwrap()
-}
-
-pub fn set_progress_bar(value: f64) {
-    let property = format!("{}%", value as u64);
-
-    get_div_by_id("progress_bar")
-        .style()
-        .set_property("width", &property)
-        .expect("Could not update progress bar");
-}

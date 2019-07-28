@@ -1,12 +1,16 @@
-pub struct ImageData {
+use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+pub struct Image {
     data: Vec<u64>,
     width: u64,
     height: u64,
 }
 
-impl ImageData {
-    pub fn init(width: u64, height: u64) -> ImageData {
-        let mut image_data = ImageData {
+#[wasm_bindgen]
+impl Image {
+    pub fn init(width: u64, height: u64) -> Image {
+        let mut image_data = Image {
             data: vec![],
             width: width,
             height: height,
@@ -67,7 +71,15 @@ impl ImageData {
         }
     }
 
-    pub fn put_pixel(&mut self, (x, y): (u64, u64)) {
+    pub fn put_pixel(&mut self, x: u64, y: u64) {
+        if x > self.width - 1 {
+            return;
+        }
+
+        if y > self.height - 1 {
+            return;
+        }
+
         let index = ((y * self.width as u64 + x) * 4) as usize;
 
         self.data[index + 0] += 1;

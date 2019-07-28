@@ -1,6 +1,8 @@
-use image_data::ImageData;
+use image::Image;
 use rand::Rng;
+use wasm_bindgen::prelude::*;
 
+#[wasm_bindgen]
 pub struct Clifford {
     a: f64,
     b: f64,
@@ -38,6 +40,7 @@ impl Config {
     }
 }
 
+#[wasm_bindgen]
 impl Clifford {
     pub fn new() -> Clifford {
         Clifford {
@@ -61,11 +64,11 @@ impl Clifford {
         self.d = d;
     }
 
-    pub fn set_iters(&mut self, iters: u64) {
-        self.iters = iters;
+    pub fn set_iters(&mut self, iters: u32) {
+        self.iters = iters.into();
     }
 
-    pub fn iterate(&mut self, data: &mut ImageData) {
+    pub fn iterate(&mut self, data: &mut Image) {
         let mut x;
         let mut y;
         let mut xn: f64 = self.rng.gen_range(-1.0, 1.0);
@@ -78,7 +81,8 @@ impl Clifford {
             xn = x;
             yn = y;
 
-            data.put_pixel(self.get_pixel_position(x, y));
+            let (x_pixel, y_pixel) = self.get_pixel_position(x, y);
+            data.put_pixel(x_pixel, y_pixel);
         }
     }
 

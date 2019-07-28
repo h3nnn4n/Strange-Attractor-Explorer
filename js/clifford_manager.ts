@@ -1,4 +1,4 @@
-import { readValue, getCanvas } from './user_interface';
+import { readValue, readColor, getCanvas } from './user_interface';
 import { Clifford } from '../pkg/strange_attractor_explorer';
 
 class CliffordManager {
@@ -56,6 +56,13 @@ class CliffordManager {
                 let parameters = this.interpolate_parameters(p)
                 this.set_attractor_params(parameters);
 
+                let color = this.interpolate_colors(p);
+                this.attractor.set_color(
+                    color[0],
+                    color[1],
+                    color[2]
+                );
+
                 if (mode == 0) {
                     this.attractor.find_bounding_box(false);
                 } else if (mode == 1) {
@@ -70,13 +77,31 @@ class CliffordManager {
     }
 
     interpolate_parameters(p: number): number[] {
-        let parameters = [
-            0, 0, 0, 0
-        ];
+        return this.interpolate_vectors(
+            this.parameters_start,
+            this.parameters_end,
+            p
+        );
+    }
 
-        for (let index = 0; index < this.parameters_start.length; index++) {
-            parameters[index] =
-                (this.parameters_end[index] - this.parameters_start[index]) * p + this.parameters_start[index];
+    interpolate_colors(p: number): number[] {
+        let color_start = readColor('color_value_start');
+        let color_end = readColor('color_value_end');
+
+        return this.interpolate_vectors(
+            color_start,
+            color_end,
+            p
+        )
+    }
+
+    interpolate_vectors(a: number[], b: number[], p: number): number[] {
+        let parameters = [];
+
+        for (let index = 0; index < a.length; index++) {
+            parameters.push(
+                (b[index] - a[index]) * p + a[index]
+            );
         }
 
         return parameters;

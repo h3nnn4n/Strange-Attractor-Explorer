@@ -21,19 +21,6 @@ impl Image {
         image_data
     }
 
-    fn init_image(&mut self) {
-        self.data.clear();
-
-        for _ in 0..self.width {
-            for _ in 0..self.height {
-                self.data.push(0);
-                self.data.push(0);
-                self.data.push(0);
-                self.data.push(255);
-            }
-        }
-    }
-
     pub fn normalize_image(&mut self) {
         let mut r = 0;
         let mut g = 0;
@@ -69,22 +56,6 @@ impl Image {
                     ((self.data[index + 2] as f64 / b as f64) * 255 as f64) as u64;
             }
         }
-    }
-
-    pub fn put_pixel(&mut self, x: u64, y: u64) {
-        if x > self.width - 1 {
-            return;
-        }
-
-        if y > self.height - 1 {
-            return;
-        }
-
-        let index = ((y * self.width as u64 + x) * 4) as usize;
-
-        self.data[index + 0] += 1;
-        self.data[index + 1] += 1;
-        self.data[index + 2] += 1;
     }
 
     pub fn gamma_correction(&mut self, gamma: f64) {
@@ -126,5 +97,36 @@ impl Image {
         }
 
         data
+    }
+}
+
+impl Image {
+    pub fn put_pixel(&mut self, x: u64, y: u64, color: [u8; 3]) {
+        if x > self.width - 1 {
+            return;
+        }
+
+        if y > self.height - 1 {
+            return;
+        }
+
+        let index = ((y * self.width as u64 + x) * 4) as usize;
+
+        for i in 0..3 {
+            self.data[index + i] += color[i] as u64;
+        }
+    }
+
+    fn init_image(&mut self) {
+        self.data.clear();
+
+        for _ in 0..self.width {
+            for _ in 0..self.height {
+                self.data.push(0);
+                self.data.push(0);
+                self.data.push(0);
+                self.data.push(255);
+            }
+        }
     }
 }

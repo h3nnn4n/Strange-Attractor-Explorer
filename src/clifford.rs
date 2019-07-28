@@ -9,8 +9,8 @@ pub struct Clifford {
     c: f64,
     d: f64,
 
+    color: [u8; 3],
     iters: u64,
-
     config: Config,
 
     rng: rand::prelude::ThreadRng,
@@ -50,7 +50,7 @@ impl Clifford {
             d: 0.7,
 
             iters: 1_000_000,
-
+            color: [255, 255, 255],
             config: Config::new(),
 
             rng: rand::thread_rng(),
@@ -68,6 +68,12 @@ impl Clifford {
         self.iters = iters.into();
     }
 
+    pub fn set_color(&mut self, red: u32, green: u32, blue: u32) {
+        self.color[0] = 255 - red as u8;
+        self.color[1] = 255 - green as u8;
+        self.color[2] = 255 - blue as u8;
+    }
+
     pub fn iterate(&mut self, data: &mut Image) {
         let mut x;
         let mut y;
@@ -82,7 +88,7 @@ impl Clifford {
             yn = y;
 
             let (x_pixel, y_pixel) = self.get_pixel_position(x, y);
-            data.put_pixel(x_pixel, y_pixel);
+            data.put_pixel(x_pixel, y_pixel, self.color);
         }
     }
 

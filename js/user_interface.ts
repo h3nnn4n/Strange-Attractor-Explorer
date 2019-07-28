@@ -1,4 +1,6 @@
 import * as $ from 'jquery';
+const AColorPicker = require('a-color-picker');
+
 
 function bindEvents(callback: any) {
     $('#render').click(callback);
@@ -24,6 +26,13 @@ function readValue(name: string): number {
     return Number(value);
 }
 
+function readColor(name: string): number[] {
+    let value = $('#' + name).val();
+    let parsed = <number[]>AColorPicker.parseColor(value, "rgb");
+
+    return parsed;
+}
+
 function getCanvas() {
     let j_canvas = $('#canvas');
 
@@ -35,5 +44,6 @@ function getCanvas() {
 export {
     bindEvents,
     readValue,
+    readColor,
     getCanvas
 }

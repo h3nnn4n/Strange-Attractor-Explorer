@@ -41,6 +41,7 @@
     "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
+    "a-color-picker": "^1.1.8",
     "es6-promise": "^4.2.6",
     "jquery": "^3.4.0",
     "sprintf-js": "^1.1.2",

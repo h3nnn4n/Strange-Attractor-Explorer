@@ -41,7 +41,8 @@ Some features that I want to implement in the nearby future:
 
 - A progress bar
 - Saving/downloading the results
-- Colors
+- ~Colors~
+  - A color picker
 - A simple parser using reverse polish notation for custom attractors
 
 ## License

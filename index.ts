@@ -32,7 +32,7 @@ function renderButtonClickEvent() {
 }
 
 export const load = () => {
-  (() => import( /* webpackChunkName: "clifford_attractor" */ './pkg/clifford_attractor.js').then(module => {
+  (() => import( /* webpackChunkName: "strange_attractor_explorer" */ './pkg/strange_attractor_explorer.js').then(module => {
     Rust = module;
     init();
   }))();

@@ -57,6 +57,10 @@ function interpolate_and_render(attractor: Clifford, image_data: any, parameters
         attractor.iterate(image_data);
       }
     }
+
+    if (mode == 0) {
+      attractor.bump_bounding_box();
+    }
   }
 }
 

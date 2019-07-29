@@ -41,10 +41,10 @@ that is, dont interpolate parameters, just set `frames` to 1.
 
 Some features that I want to implement in the nearby future:
 
-- A progress bar
+- ~A progress bar~
 - Saving/downloading the results
 - ~Colors~
-  - A color picker
+  - ~A color picker~
 - A simple parser using reverse polish notation for custom attractors
 
 ## License

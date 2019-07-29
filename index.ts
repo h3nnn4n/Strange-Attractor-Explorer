@@ -1,4 +1,4 @@
-import { bindEvents, updateProgressBar } from './js/user_interface';
+import { bindEvents, resetProgressBar } from './js/user_interface';
 import { CliffordManager } from './js/clifford_manager';
 
 var Rust: any;
@@ -17,7 +17,7 @@ function render_attractor() {
   clifford_manager.update_config();
   clifford_manager.start();
 
-  updateProgressBar(0);
+  resetProgressBar();
 
   render_loop();
 }

@@ -1,23 +1,9 @@
 import * as $ from 'jquery';
-const AColorPicker = require('a-color-picker');
-
+import * as AColorPicker from 'a-color-picker';
+const JSColorPicker = require('jscolor-picker');
 
 function bindEvents(callback: any) {
     $('#render').click(callback);
-
-    $('#a_value_end').change(callback);
-    $('#b_value_end').change(callback);
-    $('#c_value_end').change(callback);
-    $('#d_value_end').change(callback);
-
-    $('#a_value_start').change(callback);
-    $('#b_value_start').change(callback);
-    $('#c_value_start').change(callback);
-    $('#d_value_start').change(callback);
-
-    $('#gamma_value').change(callback);
-    $('#iters_value').change(callback);
-    $('#frames_value').change(callback);
 }
 
 function readValue(name: string): number {
@@ -27,8 +13,9 @@ function readValue(name: string): number {
 }
 
 function readColor(name: string): number[] {
-    let value = $('#' + name).val();
-    let parsed = <number[]>AColorPicker.parseColor(value, "rgb");
+    let value = <string>$('#' + name).val();
+
+    let parsed = <number[]><unknown>AColorPicker.parseColor(value, "rgb");
 
     return parsed;
 }

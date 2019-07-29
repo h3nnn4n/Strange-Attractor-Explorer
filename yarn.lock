@@ -3216,6 +3216,11 @@ js-yaml@3.13.1, js-yaml@^3.13.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+jscolor-picker@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/jscolor-picker/-/jscolor-picker-2.0.4.tgz#4feac9297f44442c89a5688de4ccf685f19a06b4"
+  integrity sha1-T+rJKX9ERCyJpWiN5Mz2hfGaBrQ=
+
 jsesc@^2.5.1:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"

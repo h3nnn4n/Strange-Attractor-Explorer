@@ -1,92 +1,6 @@
-import { readValue, readColor, getCanvas } from './user_interface';
+import { readValue, readColor, getCanvas, updateProgressBar, resetProgressBar } from './user_interface';
 import { Clifford } from '../pkg/strange_attractor_explorer';
-
-enum Mode {
-    START,
-    BOUND_CHECK,
-    RENDER,
-    DRAWING,
-    FINISHED,
-}
-
-class StateControl {
-    current_frame = 0;
-    frames: number;
-
-    current_mode: Mode;
-
-    changed_state: boolean;
-
-    constructor(frames: number) {
-        this.frames = frames
-        this.current_mode = Mode.START;
-
-        this.changed_state = false;
-    }
-
-    get_p(): number {
-        return this.current_frame / this.frames;
-    }
-
-    tick() {
-        this.changed_state = false;
-
-        if (this.if_starting()) {
-            this.current_frame = 0;
-            this.current_mode = Mode.BOUND_CHECK;
-            this.changed_state = true;
-        } else if (this.is_bound_checking()) {
-            this.current_frame++;
-
-            if (this.current_frame == this.frames - 1) {
-                this.current_frame = 0;
-                this.current_mode = Mode.RENDER;
-                this.changed_state = true;
-            }
-        } else if (this.is_rendering()) {
-            this.current_frame++;
-
-            if (this.current_frame == this.frames - 1) {
-                this.current_frame = 0;
-                this.current_mode = Mode.DRAWING;
-                this.changed_state = true;
-            }
-        } else if (this.is_drawing()) {
-            this.current_mode = Mode.FINISHED;
-            this.changed_state = true;
-        } else if (this.is_finished()) {
-            //
-        }
-    }
-
-    start() {
-        this.current_mode = Mode.START;
-    }
-
-    if_starting(): boolean {
-        return this.current_mode == Mode.START;
-    }
-
-    is_bound_checking(): boolean {
-        return this.current_mode == Mode.BOUND_CHECK;
-    }
-
-    is_rendering(): boolean {
-        return this.current_mode == Mode.RENDER;
-    }
-
-    is_drawing(): boolean {
-        return this.current_mode == Mode.DRAWING;
-    }
-
-    is_finished(): boolean {
-        return this.current_mode == Mode.FINISHED;
-    }
-
-    did_state_change(): boolean {
-        return this.changed_state;
-    }
-}
+import { StateControl } from './state_control';
 
 class CliffordManager {
     parameters_start: number[];
@@ -107,6 +21,8 @@ class CliffordManager {
 
     rust: any;
     state_control: StateControl;
+
+    last_bar_value: number = 0;
 
     constructor(rust: any) {
         this.rust = rust;
@@ -144,7 +60,37 @@ class CliffordManager {
         this.state_control = new StateControl(this.frames);
     }
 
+    update_config() {
+        this.iters = readValue('iters_value');
+        this.frames = readValue('frames_value');
+        this.gamma = readValue('gamma_value');
+
+        this.parameters_start = [
+            readValue('a_value_start'),
+            readValue('b_value_start'),
+            readValue('c_value_start'),
+            readValue('d_value_start'),
+        ];
+
+        this.parameters_end = [
+            readValue('a_value_end'),
+            readValue('b_value_end'),
+            readValue('c_value_end'),
+            readValue('d_value_end'),
+        ];
+
+        this.color_start = readColor('color_value_start');
+        this.color_end = readColor('color_value_end');
+
+        this.attractor.set_iters(this.iters);
+
+        this.state_control.frames = this.frames;
+    }
+
     start() {
+        resetProgressBar();
+        this.last_bar_value = 0;
+
         this.state_control.start();
     }
 
@@ -153,6 +99,8 @@ class CliffordManager {
     }
 
     interpolate_and_render_step() {
+        this.update_progress_bar();
+
         this.state_control.tick();
 
         if (this.state_control.is_bound_checking()) {
@@ -177,6 +125,18 @@ class CliffordManager {
         } else if (this.state_control.is_finished()) {
             //
         }
+    }
+
+    update_progress_bar() {
+        let value = this.state_control.get_progress();
+
+        if (value - this.last_bar_value < 5 && value < 100) {
+            return;
+        }
+
+        this.last_bar_value = value;
+
+        updateProgressBar(value);
     }
 
     set_attractor_parameters_and_color(p: number) {

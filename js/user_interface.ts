@@ -41,9 +41,23 @@ function getCanvas() {
     return canvas;
 }
 
+function updateProgressBar(value: number) {
+    let bar = $('#progress_bar');
+
+    bar.css('width', value + '%');
+}
+
+function resetProgressBar() {
+    $('#progress_bar').hide();
+    $('#progress_bar').width(0 + '%');
+    $('#progress_bar').show();
+}
+
 export {
     bindEvents,
     readValue,
     readColor,
-    getCanvas
+    getCanvas,
+    updateProgressBar,
+    resetProgressBar
 }

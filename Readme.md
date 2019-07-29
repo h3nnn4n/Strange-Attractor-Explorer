@@ -46,6 +46,7 @@ Some features that I want to implement in the nearby future:
 - ~Colors~
   - ~A color picker~
 - A simple parser using reverse polish notation for custom attractors
+  - Use the standard notation
 - Code a simple Lyapunov exponent to randomly find chaotic setupts
 
 ## License

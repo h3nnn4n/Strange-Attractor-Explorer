@@ -4,6 +4,13 @@ const JSColorPicker = require('jscolor-picker');
 
 function bindEvents(callback: any) {
     $('#render').click(callback);
+    $('#download').click(downloadCanvas);
+}
+
+function downloadCanvas() {
+    var dataURL = getCanvas().toDataURL('image/png');
+    $('#download').attr('href', dataURL);
+    $('#download').attr('download', 'image.png');
 }
 
 function readValue(name: string): number {

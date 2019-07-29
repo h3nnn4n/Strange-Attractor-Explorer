@@ -53,7 +53,7 @@ export class StateControl {
         } else if (this.is_bound_checking()) {
             this.current_frame++;
 
-            if (this.current_frame == this.frames - 1) {
+            if (this.current_frame == this.frames) {
                 this.current_frame = 0;
                 this.current_mode = Mode.RENDER;
                 this.changed_state = true;
@@ -61,7 +61,7 @@ export class StateControl {
         } else if (this.is_rendering()) {
             this.current_frame++;
 
-            if (this.current_frame == this.frames - 1) {
+            if (this.current_frame == this.frames) {
                 this.current_frame = 0;
                 this.current_mode = Mode.DRAWING;
                 this.changed_state = true;

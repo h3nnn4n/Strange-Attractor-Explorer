@@ -21,6 +21,20 @@ impl Image {
         image_data
     }
 
+    pub fn reset(&mut self) {
+        for x in 0..self.width {
+            for y in 0..self.height {
+                let index = ((y * self.width + x) * 4) as usize;
+
+                for i in 0..3 {
+                    self.data[index + i] = 0;
+                }
+
+                self.data[index + 3] = 255;
+            }
+        }
+    }
+
     pub fn normalize_image(&mut self) {
         let mut r = 0;
         let mut g = 0;

@@ -1,10 +1,12 @@
-import { bindEvents, readValue, getCanvas } from './js/user_interface';
+import { bindEvents } from './js/user_interface';
 import { CliffordManager } from './js/clifford_manager';
 
 var Rust: any;
+var clifford_manager: CliffordManager;
 
 const init = () => {
   Rust.init();
+  clifford_manager = new CliffordManager(Rust);
 
   bindEvents(render_attractor);
 
@@ -12,10 +14,21 @@ const init = () => {
 }
 
 function render_attractor() {
-  let clifford_manager = new CliffordManager(Rust);
+  clifford_manager.start();
 
-  clifford_manager.interpolate_and_render();
-  clifford_manager.draw_to_canvas();
+  render_loop();
+}
+
+function render_loop() {
+  if (clifford_manager.finished_running()) {
+    return;
+  }
+
+  clifford_manager.interpolate_and_render_step()
+
+  setTimeout(() => {
+    render_loop();
+  }, 0);
 }
 
 export const load = () => {

@@ -179,34 +179,6 @@ class CliffordManager {
         }
     }
 
-    interpolate_and_render() {
-        for (let mode = 0; mode < 2; mode++) {
-            for (let frame = 0; frame < this.frames; frame++) {
-                let p = frame / this.frames;
-
-                let parameters = this.interpolate_parameters(p)
-                this.set_attractor_params(parameters);
-
-                let color = this.interpolate_colors(p);
-                this.attractor.set_color(
-                    color[0],
-                    color[1],
-                    color[2]
-                );
-
-                if (mode == 0) {
-                    this.attractor.find_bounding_box(false);
-                } else if (mode == 1) {
-                    this.attractor.iterate(this.image_data);
-                }
-            }
-
-            if (mode == 0) {
-                this.attractor.bump_bounding_box();
-            }
-        }
-    }
-
     set_attractor_parameters_and_color(p: number) {
         let parameters = this.interpolate_parameters(p)
         this.set_attractor_params(parameters);

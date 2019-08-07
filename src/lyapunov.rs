@@ -47,6 +47,24 @@ impl Lyapunov {
         self.iterate();
     }
 
+    pub fn find_chaotic_params(&mut self) {
+        self.set_iters(100_000);
+
+        loop {
+            let a = self.rng.gen_range(-2.0, 2.0);
+            let b = self.rng.gen_range(-2.0, 2.0);
+            let c = self.rng.gen_range(-2.0, 2.0);
+            let d = self.rng.gen_range(-2.0, 2.0);
+
+            self.set_parameters(a, b, c, d);
+            self.evaluate();
+
+            if self.is_chaotic() {
+                break;
+            }
+        }
+    }
+
     pub fn is_chaotic(&self) -> bool {
         if self.lyapunov > 10.0 {
             return true;
@@ -155,5 +173,14 @@ mod test {
         lyap.evaluate();
 
         assert!(!lyap.is_chaotic());
+    }
+
+    #[test]
+    fn test_find_chaotic_parameters() {
+        let mut lyap = Lyapunov::new();
+
+        lyap.find_chaotic_params();
+
+        assert!(lyap.is_chaotic());
     }
 }

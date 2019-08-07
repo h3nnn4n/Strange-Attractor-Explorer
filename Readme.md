@@ -10,6 +10,9 @@ equations in the future.
   <img src="/examples/example3.jpg" width="100" />
   <img src="/examples/example4.jpg" width="100" />
   <img src="/examples/example5.jpg" width="100" />
+  <img src="/examples/example6.jpg" width="100" />
+  <img src="/examples/example7.jpg" width="100" />
+  <img src="/examples/example8.jpg" width="100" />
 </p>
 
 ## How to use

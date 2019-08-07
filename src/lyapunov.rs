@@ -3,12 +3,12 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub struct Lyapunov {
-    a: f64,
-    b: f64,
-    c: f64,
-    d: f64,
+    pub a: f64,
+    pub b: f64,
+    pub c: f64,
+    pub d: f64,
 
-    lyapunov: f64,
+    pub lyapunov: f64,
 
     iters: u64,
 
@@ -103,7 +103,7 @@ impl Lyapunov {
                 return;
             }
 
-            if i > 1_000 {
+            if i > 10_000 {
                 let d_d = self.distance(x, y, x_2, y_2);
                 self.lyapunov += (d_d / d_0).abs().log2();
             }

@@ -13,6 +13,7 @@ use wasm_bindgen::prelude::*;
 
 use clifford::Clifford;
 use image::Image;
+use lyapunov::Lyapunov;
 
 cfg_if! {
     if #[cfg(feature = "wee_alloc")] {
@@ -30,6 +31,11 @@ pub fn init_image_data(width: u32, height: u32) -> Image {
 #[wasm_bindgen]
 pub fn init_attractor() -> Clifford {
     Clifford::new()
+}
+
+#[wasm_bindgen]
+pub fn init_lyapunov() -> Lyapunov {
+    Lyapunov::new()
 }
 
 #[wasm_bindgen]

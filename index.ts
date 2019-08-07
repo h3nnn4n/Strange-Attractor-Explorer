@@ -8,7 +8,7 @@ const init = () => {
   Rust.init();
   clifford_manager = new CliffordManager(Rust);
 
-  bindEvents(render_attractor);
+  bindEvents(render_attractor, find_random_attractor);
 
   render_attractor();
 }
@@ -20,6 +20,13 @@ function render_attractor() {
   resetProgressBar();
 
   render_loop();
+}
+
+function find_random_attractor() {
+  let lyap = Rust.init_lyapunov();
+  lyap.find_chaotic_params();
+
+  return lyap;
 }
 
 function render_loop() {

@@ -5,6 +5,7 @@ extern crate web_sys;
 
 mod clifford;
 mod image;
+mod lyapunov;
 mod utils;
 
 use cfg_if::cfg_if;

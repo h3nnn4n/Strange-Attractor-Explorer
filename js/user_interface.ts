@@ -15,19 +15,20 @@ function downloadCanvas() {
 }
 
 function setRandomParams(params: any) {
-    $('#a_value_start').val(params.a);
-    $('#b_value_start').val(params.b);
-    $('#c_value_start').val(params.c);
-    $('#d_value_start').val(params.d);
+    let start_params = params.get_start_params();
+    let end_params = params.get_end_params();
 
-    $('#a_value_end').val(params.a + Math.random() * 0.1);
-    $('#b_value_end').val(params.b + Math.random() * 0.1);
-    $('#c_value_end').val(params.c + Math.random() * 0.1);
-    $('#d_value_end').val(params.d + Math.random() * 0.1);
+    $('#a_value_start').val(start_params[0]);
+    $('#b_value_start').val(start_params[1]);
+    $('#c_value_start').val(start_params[2]);
+    $('#d_value_start').val(start_params[3]);
+
+    $('#a_value_end').val(end_params[0]);
+    $('#b_value_end').val(end_params[1]);
+    $('#c_value_end').val(end_params[2]);
+    $('#d_value_end').val(end_params[3]);
 
     $('#render').click();
-
-    console.log('found params with lyapunov: ' + params.lyapunov);
 }
 
 function readValue(name: string): number {

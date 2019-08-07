@@ -1,7 +1,5 @@
 use rand::Rng;
-use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen]
 pub struct Lyapunov {
     pub a: f64,
     pub b: f64,
@@ -15,7 +13,6 @@ pub struct Lyapunov {
     rng: rand::prelude::ThreadRng,
 }
 
-#[wasm_bindgen]
 impl Lyapunov {
     pub fn new() -> Lyapunov {
         Lyapunov {
@@ -72,9 +69,7 @@ impl Lyapunov {
 
         false
     }
-}
 
-impl Lyapunov {
     fn iterate(&mut self) {
         let mut x;
         let mut y;

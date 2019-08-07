@@ -6,6 +6,7 @@ extern crate web_sys;
 mod clifford;
 mod image;
 mod lyapunov;
+mod lyapunov_line;
 mod utils;
 
 use cfg_if::cfg_if;
@@ -13,7 +14,7 @@ use wasm_bindgen::prelude::*;
 
 use clifford::Clifford;
 use image::Image;
-use lyapunov::Lyapunov;
+use lyapunov_line::LyapunovLine;
 
 cfg_if! {
     if #[cfg(feature = "wee_alloc")] {
@@ -34,8 +35,8 @@ pub fn init_attractor() -> Clifford {
 }
 
 #[wasm_bindgen]
-pub fn init_lyapunov() -> Lyapunov {
-    Lyapunov::new()
+pub fn init_lyapunov() -> LyapunovLine {
+    LyapunovLine::new()
 }
 
 #[wasm_bindgen]

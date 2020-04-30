@@ -43,7 +43,7 @@
   "dependencies": {
     "a-color-picker": "^1.1.8",
     "es6-promise": "^4.2.6",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "jscolor-picker": "^2.0.4",
     "sprintf-js": "^1.1.2",
     "tslib": "^1.9.3"

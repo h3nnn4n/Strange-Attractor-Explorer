@@ -40,18 +40,6 @@ that is, dont interpolate parameters, just set `frames` to 1.
 8. Run `yarn dev-server`
 9. Go to `http://localhost:8080/`
 
-## TODO
-
-Some features that I want to implement in the nearby future:
-
-- ~A progress bar~
-- ~Saving/downloading the results~
-- ~Colors~
-  - ~A color picker~
-- A simple parser using reverse polish notation for custom attractors
-  - Use the standard notation
-- ~Code a simple Lyapunov exponent to randomly find chaotic setups~
-
 ## License
 
 Check the _LICENSE_ file for more information.
